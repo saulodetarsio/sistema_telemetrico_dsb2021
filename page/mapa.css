@@ -1,0 +1,253 @@
+body{
+    background-color: #1C1C1C;
+    margin: 0px;
+    padding: 0px;
+    /**font-family: 'Roboto Mono', monospace;**/
+    /**font-family: 'Righteous', cursive; **/
+    /**font-family: 'Freckle Face', cursive; **/
+
+    font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+#mapid{
+    height: 750px;
+}
+
+.map-box{
+     flex-grow: 7;
+      margin : 5px;
+      border-radius: 5px;
+      padding:0px;
+}
+
+.map-box h3{
+    padding: 0px;
+    margin: 0px;
+    background-color: black;
+    color: orange;
+}
+
+.mapaid-header h3{
+    margin: 0px;
+    padding: 0px;
+}
+
+#informacoes{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: white;
+    padding: 0px;
+    height: 750px;
+    max-width: 350px;
+
+}
+
+.infos-header{
+    display: flex;
+    background-color: black;
+    color: orange;
+    justify-content: center;
+    padding: 5px;
+
+}
+
+.infos-header h3{
+      margin: 0px;
+    padding: 0px;
+}
+
+
+.equipes-box{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    justify-content: space-around;
+    flex-flow: row wrap;
+
+
+}
+
+.equipe{
+    display: flex;
+    flex-basis: auto;
+    flex-flow: row;
+    align-items: center;
+
+    border-radius: 5px;
+    padding: 0px;
+ }
+
+.nome-equipe{
+    padding: 5px;
+}
+ .equipe div {
+    padding: 5px;
+ }
+
+.div-logo{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.principal {
+	height: 100%;
+  	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/**Estrutura 1**/
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	color: orange;
+	background: black;
+	padding: 5px;
+}
+
+.caixa-tempo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+.caixa-tempo h1{
+    margin-right: 20px;
+}
+.caixa-tempo-btn{
+    display: flex;
+    flex-direction: row;
+}
+
+.caixa-tempo-btn div{
+    margin: 5px 15px 5px 15px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.caixa-tempo-btn div:hover{
+    border: 2px solid orange;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.box{
+    display: flex;
+	flex-direction: row;
+	flex: 1;
+	padding: 5px;
+    align-items: center;
+
+}
+
+.footer{
+    display: flex;
+	color: orange;
+	align-items: center;
+	background: black;
+	justify-content: center;
+
+	text-align: center;
+
+	padding: 5px;
+
+}
+
+/* Animação  */
+@keyframes pulso-helmuth {
+    from{ 
+    	
+    	border-color: green;
+ 
+    }
+    to{
+    	border-color: rgb(0, 0, 0);
+    }
+}
+
+.geolocalizacao{
+	min-height: 4px;
+	min-width: 4px;
+
+	 border-radius: 50%;
+	border: 2px solid green;
+	animation: pulso-helmuth 3.0s ease infinite;
+	-webkit-animation: pulso-helmuth 3.0s ease infinite;
+
+
+}
+
+.marcador-equipe{
+   height: 5px;
+   width: 5px;
+   border-radius: 50%;
+ }
+
+
+.boia{
+	width: 20px;
+	height: 20px;
+	background-color: orange;
+	border-radius: 50%;
+}
+
+
+.equipe-1{
+    background-color: #990033;
+}
+
+.equipe-2{
+    background-color: #6600cc;
+}
+
+.equipe-3{
+    background-color: #3333FF;
+}
+
+.equipe-4{
+    background-color: #00FF99;
+}
+
+.equipe-5{
+    background-color: #220900;
+}
+
+.equipe-6{
+    background-color: #FF4300;
+}
+
+.equipe-7{
+    background-color: #CDE242;
+}
+
+.equipe-8{
+    background-color: #FF00FF;
+}
+
+.equipe-9{
+    background-color: #800000;
+}
+
+.equipe-10{
+    background-color: #FFD700;
+}
+
+.equipe-11{
+    background-color: #ADFF2F;
+}
+
+.equipe-12{
+    background-color: #254000;
+}
+
+.equipe-13{
+    background-color: #FF6347;
+}
