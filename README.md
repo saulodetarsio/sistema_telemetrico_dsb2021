@@ -15,22 +15,24 @@ bibliotecas css e javascript.
 
 
 ## Instalando as depedências
+1. Abra o terminal e execute o seguinte comando:
+    * sudo apt-get update
+    
+2. Ainda com o terminal aberto, instale as seguintes dependências:
 
-Abra o terminal e instale as seguintes dependências:
-
-* sudo apt-get update
-* sudo apt-get install build-essential quilt python-setuptools
-* sudo apt-get install libssl-dev
-* sudo apt-get install cmake
-* sudo apt-get install libc-ares-dev
-* sudo apt-get install uuid-dev
-* sudo apt-get install daemon
-* sudo apt-get install libwebsockets-dev
-* sudo apt-get install python3-venv
+    * sudo apt-get install build-essential quilt python-setuptools
+    * sudo apt-get install libssl-dev
+    * sudo apt-get install cmake
+    * sudo apt-get install libc-ares-dev
+    * sudo apt-get install uuid-dev
+    * sudo apt-get install daemon
+    * sudo apt-get install libwebsockets-dev
+    * sudo apt-get install python3-venv
+    * sudo apt-get install python3-pip
 
 ## Instalando e utilizando as bibliotecas necessárias
 
-1. Com o terminal aberto na raiz do projeto, crie um ambiente virtual 
+1. Com o terminal aberto na pasta raiz do projeto, crie um ambiente virtual 
 com o seguinte comando:
     * python3 -m venv libs
 
@@ -40,6 +42,8 @@ com o seguinte comando:
 3. Instale todas as bibliotecas necessárias com o seguinte comando:
     * pip3 install -r requirements.txt
 
+4. Logo após a instalação das bibliotecas necessárias, feche o terminal.
+
 ## Instale o servidor mosquitto
 
 1. Instale o servidor mosquitto na máquina:
@@ -47,18 +51,19 @@ com o seguinte comando:
 
 2. Verifique o status do servidor mosquitto com o seguinte comando:
     * sudo systemctl status mosquitto
-
+    
 ## Connfigurando o servidor mosquitto
 
-1. Baixe o código fonte do mosquitto com o seguinte comando:
+1. Com um navegador de sua preferências, baixe o código fonte do mosquitto 
+com o seguinte link:
     
-    * wget http://mosquitto.org/files/source/mosquitto-1.4.10.tar.gz
+    * http://mosquitto.org/files/source/mosquitto-1.4.10.tar.gz
 
-2. Descompacte o arquivo com o seguinte comando:
-    * tar zxvf mosquitto-1.4.10.tar.gz
-    
-3. Entre na pasta mosquitto-1.4.10/ e edite execute o seguinte
+2. Faça a extração do arquivo baixado em um diretórioa de sua preferência
+
+3. Entre na pasta mosquitto-1.4.10/ que foi extraida e execute o seguinte
 comando para editar o arquivo config.mk
+
     * sudo nano config.mk
 
 4. Altere o valor do parâmetro WITH_WEBSOCKETS para 'yes'
@@ -68,18 +73,19 @@ comando para editar o arquivo config.mk
 
 ## Build mosquitto
 
-1. Na pasta mosquitto-1.4.10/, execute os seguintes comandos:
-    * make
-    * sudo make install 
-    * sudo cp mosquitto.conf /etc/mosquitto
+Com o terminal aberto na pasta mosquitto-1.4.10/, execute os 
+seguintes comandos:
+* make
+* sudo make install 
+* sudo cp mosquitto.conf /etc/mosquitto
     
 ## Configurando portas no servidor mosquitto:
 1. Com o terminal, navegue até a pasta /etc/mosquitto
 
 2. Abra o arquivo mosquitto.conf com o seguinte comando:
-    * sudo gedit mosquitto.conf
+    * sudo nano mosquitto.conf
 
-3. Altere/adicione os seguintes valores na seção "Default Listener" do arquivo:
+3. Adicione os seguintes valores na seção "Default Listener" do arquivo:
 
     * port 1883
     * listener 9001
@@ -87,7 +93,6 @@ comando para editar o arquivo config.mk
 
 4. Salve e feche o arquivo
 
-5. Reinicie o computador
 
 ## Execute o servidor mosquitto
 1. Finalize a execução do servidor mosquitto com o seguinte comando:
@@ -100,14 +105,20 @@ comando para editar o arquivo config.mk
     * mosquitto -c /etc/mosquitto/mosquitto.conf
     
 ## Abrindo a aplicação
+1. Na pasta raiz da aplicação, ative o ambiente virtual criado nos passos anteriores
+com o seguinte comando:
+    * source libs/bin/activate
+    
+2. Na pasta transmissão_fake, dentro da pasta raiz do projeto,
+ encontram-se os scripts que simulam a transmissão que deve ser realizada 
+ por uma embarcação. Navegue até essa pasta com o terminal e ambiente 
+ virtual ativado e execute um dos scripts com o seguinte comando:
+ 
+    * python3 equipe_1.py
 
-1. Na pasta transmissão_fake encontram-se os scripts que simulam a transmissão que deve ser realizada por uma 
-embarcação. Com o terminal aberto nesta pasta, execute um dos scripts com o seguinte comando:
-    * python3 equipe_1.txt
+3. Vá até a pasta 'page', localizada dentro da pasta raiz, e com o navegador, abra o arquivo mapa.html
 
-2. Vá até a pasta 'page' e com o navegador, abra o arquivo mapa.html
-
-3. No menu "Ferramentas de Densenvolvedor", na aba "Console", você verá os dados que estão
+3. No menu "Ferramentas de Densenvolvedor" do browser, na aba "Console", você verá os dados que estão
 sendo transmitidos pelo script.
 
 4. Você verá também que a localização de ums dos barcos está sendo atualizada no mapa.
