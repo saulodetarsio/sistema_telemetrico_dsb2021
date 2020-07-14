@@ -24,7 +24,7 @@ def on_connect(client, userdata, flags, rc):
 
 
 def gravar_linha_csv(div1, div2, div3, div4, div5, div6, lng):
-    with open('dados_iffsolaris_provas78_dsb2020.csv', 'a', newline='') as file:
+    with open('dados_iffsolaris_provas3_dsb2020.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         #writer.writerow(["SN", "Name", "Contribution"])
         writer.writerow([div1, div2, div3, div4, div5, div6, lng])
@@ -62,14 +62,14 @@ def definir_valores_da_linha(linha):
 try:
 
     """
-    with open('dados_iffsolaris_provas78_dsb2020.csv', 'a', newline='') as file:
+    with open('dados_iffsolaris_provas3_dsb2020.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         #writer.writerow(["SN", "Name", "Contribution"])
         writer.writerow(["bateria_principal", "baterias_auxilires", "placas", "corrente_motor", "velocidade", "latitude", "longitude"])
 
     """
 
-    ref_arquivo = open("dados_iffsolaris_prova5_dsb2020.txt","r")
+    ref_arquivo = open("dados_iffsolaris_prova3_dsb2020.txt","r")
 
     client = mqtt.Client('publicador_{}'.format(identificador_barco)) # instancia a conexao
     client.on_connect = on_connect # define o callback do evento on_connect

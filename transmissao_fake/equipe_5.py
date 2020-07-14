@@ -24,7 +24,7 @@ def on_connect(client, userdata, flags, rc):
 
 
 def gravar_linha_csv(div1, div2, div3, div4, div5, div6, lng):
-    with open('dados_iffsolaris_provas78_dsb2020.csv', 'a', newline='') as file:
+    with open('dados_iffsolaris_provas3_dsb2020.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         #writer.writerow(["SN", "Name", "Contribution"])
         writer.writerow([div1, div2, div3, div4, div5, div6, lng])
