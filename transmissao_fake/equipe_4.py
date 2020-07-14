@@ -69,7 +69,7 @@ try:
 
     """
 
-    ref_arquivo = open("dados_iffsolaris_prova5_dsb2020.txt","r")
+    ref_arquivo = open("dados_iffsolaris_prova3_dsb2020.txt","r")
 
     client = mqtt.Client('publicador_{}'.format(identificador_barco)) # instancia a conexao
     client.on_connect = on_connect # define o callback do evento on_connect
