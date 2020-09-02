@@ -1,4 +1,4 @@
-# Sistema telémetrico DSB 2021 - Tela de acompanhamento
+# Sistema telemétrico DSB 2021 - Tela de acompanhamento
 
 Esse projeto consiste na elaboração de um sistema telemétrico que auxiliará o acompanhamento das
 embarcações ao longo das provas do Desafio Solar Brasil edição 2021. 
