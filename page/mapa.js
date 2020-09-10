@@ -54,11 +54,9 @@ function map_controller(){
             boias.push(this.boias[k].coord)
         }
 
-
 		var polygon = L.polygon(boias, {color: 'white', fill: true,
 			lineJoin: 'round', fillColor: 'none', fillOpacity: 0.5}).addTo(this.mymap);
 	}
-
 
     this.renderizar_marcador_equipe = function(id, coord){
 
@@ -68,15 +66,19 @@ function map_controller(){
 
 		var equipe = L.marker(coord, {icon: myIcon}).addTo(this.mymap);
 
-		var img = "<img src='img/equipe-"+id+".png' width='80' height='80'>"
-
-		equipe.bindPopup(img);
-
 		this.marcadores_equipes.push(equipe)
     }
 
     this.atualizar_localizacao_barco = function (id, coord){
-        this.marcadores_equipes[id-1].setLatLng(coord);
+        var equipe = this.marcadores_equipes[id-1]
+        equipe.setLatLng(coord);
+
+        var img = "<div>"+equipe.getLatLng()+"<img src='img/equipe-"+id+".png' width='80' height='80'></div>"
+
+		equipe.bindPopup(img);
 	}
 
+	this.renderizar_boias = function(j){
+        var index = Object.keys(j).length + 1
+	}
 }
