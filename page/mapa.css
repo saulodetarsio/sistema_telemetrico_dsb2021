@@ -2,11 +2,11 @@ body{
     background-color: #1C1C1C;
     margin: 0px;
     padding: 0px;
-    /**font-family: 'Roboto Mono', monospace;**/
+    font-family: 'Roboto Mono', monospace;
     /**font-family: 'Righteous', cursive; **/
     /**font-family: 'Freckle Face', cursive; **/
 
-    font-family: 'ZCOOL KuaiLe', cursive;
+    /**font-family: 'ZCOOL KuaiLe', cursive;**/
 }
 
 #mapid{
@@ -42,6 +42,8 @@ body{
     padding: 0px;
     height: 750px;
     max-width: 350px;
+
+    font-weight: bold;
 
 }
 
@@ -153,12 +155,35 @@ body{
 	color: orange;
 	align-items: center;
 	background: black;
-	justify-content: center;
+	justify-content: space-between;
 
 	text-align: center;
 
 	padding: 5px;
 
+}
+
+.icones-footer{
+    display: flex;
+    padding: 5px;
+    flex-direction: row;
+}
+
+.icones-footer div {
+    padding: 10px;
+
+}
+
+.localizacao-ano{
+    font-weight: bold;
+}
+
+
+.icones-footer div:hover {
+    background-color: white;
+    border: 1px solid yellow;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Animação  */
@@ -177,7 +202,7 @@ body{
 	min-height: 4px;
 	min-width: 4px;
 
-	 border-radius: 50%;
+	border-radius: 50%;
 	border: 2px solid green;
 	animation: pulso-helmuth 3.0s ease infinite;
 	-webkit-animation: pulso-helmuth 3.0s ease infinite;

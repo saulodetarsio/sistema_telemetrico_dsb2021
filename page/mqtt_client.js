@@ -12,15 +12,21 @@ function onConnect1() {
 
 function onMessage(msg){
     var mensagem = msg.payloadString
-    console.log(mensagem)
+    //console.log(mensagem)
 
     if(mensagem.length > 22){
-        mensagem = mensagem.slice(1, 22)
+        mensagem = mensagem.slice(1, mensagem.length-1)
 
         var vec = mensagem.split(",")
+
         var id = parseInt(vec[0])
-        var latitude = parseFloat(vec[1]/1000000)
-        var longitude = parseFloat(vec[2]/1000000)
+
+        var latitude = parseFloat(vec[1])
+        var longitude = parseFloat(vec[2])
+
+        console.log('Lat: '+latitude)
+        console.log('Lng: '+longitude)
+        console.log("Id: "+id)
 
         map.atualizar_localizacao_barco(id, [latitude, longitude])
 
@@ -68,42 +74,6 @@ var options1 = {
  client.connect(options1); //connect
 
 
-map.renderizar_boias()
-map.renderizar_circuito_prova()
-
-//Equipes
-equipes.push(new Equipe(1, "ARARIBOIA", "#990033", [-26.243243, -48.643391]))
-equipes.push(new Equipe(2, "BABITONGA", "#6600cc", [-26.244061, -48.645301]))
-equipes.push(new Equipe(3, "SOLARIS", "#3333FF", [-26.241790, -48.646213]))
-equipes.push(new Equipe(4, "ADSUMUS", "#00FF99", [-26.241001, -48.643595]))
-equipes.push(new Equipe(5, "ETEHL", "#220900", [-26.244784, -48.643923]))
-
-equipes.push(new Equipe(6, "HURAKAN", "#FF4300", [-26.247648, -48.653017]))
-equipes.push(new Equipe(7, "LAFAE", "#CDE242", [-26.249833, -48.650635]))
-equipes.push(new Equipe(8, "LEVIATÃ", "#FF00FF", [-26.245365, -48.648508]))
-equipes.push(new Equipe(9, "MSP", "#800000", [-26.245075, -48.643740]))
-equipes.push(new Equipe(10, "SMART CEFET", "#FFD700", [-26.246378, -48.646438]))
-equipes.push(new Equipe(11, "SOLARES", "#ADFF2F", [-26.247689, -48.646131]))
-equipes.push(new Equipe(12, "FERNANDO AMORIM", "#254000", [-26.245302, -48.652746]))
-equipes.push(new Equipe(13, "REI DO SOL", "#FF6347", [-26.245763, -48.644399]))
-
-for(var a = 0; a < equipes.length; a++){
-    map.renderizar_marcador_equipe(equipes[a].id, equipes[a].coords)
-}
-
-renderizar_equipes()
- map.mymap.on("click", function(e){
-          console.log(e)
-         //new L.Marker([e.latlng.lat, e.latlng.lng]).addTo(this.mymap);
-         var lat = e.latlng.lat
-         var lng = e.latlng.lng
-
-          console.log(lat, lng)
-
-      })
-
-
-
 //Eventos
 $('.equipe').mouseover(
     function(){
@@ -126,8 +96,6 @@ $("#iniciar_prova_button").click(function(){
     if(localStorage.getItem("hora_gravada") == null){
        localStorage.setItem("hora_gravada", data)
     }
-
-
 })
 
 $("#recomecar_prova_button").click(function(){
@@ -135,10 +103,37 @@ $("#recomecar_prova_button").click(function(){
        localStorage.removeItem("hora_gravada")
     }
     $('#info-hora').text("00 : 00 : 00")
-   // localStorage.setItem("hora_gravada", new Date())
+})
+
+$("#btn-cadastrar-boias").click(function(){
+    var lat = $("#latitude-value").val()
+    var lng = $("#longitude-value").val()
+
+    if(localStorage.getItem("boias") == null){
+        var boias_json = {"1": lat+","+lng}
+        localStorage.setItem("boias", JSON.stringify(boias_json))
+    }else{
+        var retrievedObject = JSON.parse(localStorage.getItem('boias'));
+        var index = Object.keys(retrievedObject).length + 1
+
+        var prop = index.toString()
+
+        retrievedObject[prop] = lat+","+lng
+
+        localStorage.setItem("boias", JSON.stringify(retrievedObject))
+
+    }
+
+    //Chamar o método do controle reponsável por renderizar as boias no mapa
+
+    $("#longitude-value").val("")
+    $("#latitude-value").val("")
+    alert("Boia adicionada no mapa com sucesso!")
+
 })
 
 
+// Tick-tack
 setInterval(function(){
     if(localStorage.getItem("hora_gravada") != null){
         var tempo_decorrido = ""
