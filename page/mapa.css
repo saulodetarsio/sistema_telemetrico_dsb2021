@@ -224,55 +224,24 @@ body{
 	border-radius: 50%;
 }
 
-
-.equipe-1{
-    background-color: #990033;
+.equipe-Adsumus{
+    background-color: red;
 }
 
-.equipe-2{
-    background-color: #6600cc;
+.equipe-Arariboia{
+    background-color: orange;
 }
 
-.equipe-3{
-    background-color: #3333FF;
+.equipe-FernandoAmorim{
+    background-color: green;
 }
 
-.equipe-4{
-    background-color: #00FF99;
+.popup_marcador{
+    display: flex;
+    flex-direction: row;
 }
 
-.equipe-5{
-    background-color: #220900;
-}
-
-.equipe-6{
-    background-color: #FF4300;
-}
-
-.equipe-7{
-    background-color: #CDE242;
-}
-
-.equipe-8{
-    background-color: #FF00FF;
-}
-
-.equipe-9{
-    background-color: #800000;
-}
-
-.equipe-10{
-    background-color: #FFD700;
-}
-
-.equipe-11{
-    background-color: #ADFF2F;
-}
-
-.equipe-12{
-    background-color: #254000;
-}
-
-.equipe-13{
-    background-color: #FF6347;
+.popup_marcador div p{
+    margin: 0px;
+    padding: 0px;
 }

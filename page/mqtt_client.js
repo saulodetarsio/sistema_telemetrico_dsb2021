@@ -1,8 +1,20 @@
 var map = new map_controller()
-
+var equipes_json = new EquipesJson()
 var equipes = []
+var numero_sorteado = 0;
+
+var opcoes_equipes = ["Arariboia", "Adsumus",  "Fernando Amorim"]
+
 
 var client = new Paho.MQTT.Client("localhost", Number(9001), "/app1/dados/", "solaris"+parseInt(Math.random() * 100 ));
+
+//document.write("connecting to "+ host);
+var options1 = {
+    timeout: 3,
+    onSuccess: onConnect1,
+    useSSL: false,
+ };
+
 
 // called when the client connects
 function onConnect1() {
@@ -20,18 +32,44 @@ function onMessage(msg){
         var vec = mensagem.split(",")
 
         var id = parseInt(vec[0])
-
         var latitude = parseFloat(vec[1])
         var longitude = parseFloat(vec[2])
+        var velocidade = parseFloat(vec[5])
+        var tensao_modulo = parseFloat(vec[6])
 
-        console.log('Lat: '+latitude)
-        console.log('Lng: '+longitude)
-        console.log("Id: "+id)
+        var equipe = equipes[id]
 
-        map.atualizar_localizacao_barco(id, [latitude, longitude])
+        equipe.set_coords([latitude, longitude])
+        equipe.set_tensao_modulo(tensao_modulo)
+        equipe.set_velocidade(velocidade)
+
+        map.atualizar_localizacao_barco(equipe)
 
     }
 
+}
+
+function renderizar_opcoes_equipes(){
+    opcoes_equipes  = opcoes_equipes.sort()
+
+    for(var i = 0; i < opcoes_equipes.length; i++){
+        var opt = $("<option></option>").text(opcoes_equipes[i]);
+        $("#equipe-selecionada").append(opt)
+    }
+}
+
+function renderizar_equipes_selecionadas(){
+    var t = localStorage.getItem("equipes_selecionadas")
+    var e;
+    if(t != null){
+        e = t.split(",")
+        for(var i = 0; i < e.length; i++){
+            var x = equipes_json[e[i]]
+            var nova_equipe = new Equipe(i+1, e[i],x['cor'], x['coords'], x['img'])
+            map.adicionar_marcador_map(nova_equipe)
+            equipes.push(nova_equipe)
+        }
+    }
 }
 
 function renderizar_equipes(){
@@ -51,22 +89,15 @@ function renderizar_equipes(){
         var nome_equipe = $('<div class="nome-equipe"></div>')
         nome_equipe.text(equipes[i].nome)
 
-
         equipe.append(div1)
         equipe.append(nome_equipe)
 
     }
 }
 
-
-
-
-//document.write("connecting to "+ host);
-var options1 = {
-    timeout: 3,
-    onSuccess: onConnect1,
-    useSSL: false,
- };
+renderizar_opcoes_equipes()
+renderizar_equipes_selecionadas()
+renderizar_equipes()
 
 
 //Cliente 1
@@ -74,21 +105,13 @@ var options1 = {
  client.connect(options1); //connect
 
 
+map.mymap.on('click', function(e){
+    var lat = e.latlng.lat
+         var lng = e.latlng.lng
+
+          console.log(lat, lng)
+})
 //Eventos
-$('.equipe').mouseover(
-    function(){
-        var id = parseInt($(this).attr('id').split("_")[1]);
-        $('.equipe-'+id).click()
-    }
-)
-
-$('.equipe').mouseout(
-    function(){
-        var id = parseInt($(this).attr('id').split("_")[1]);
-        $('.leaflet-popup-close-button')[0].click()
-    }
-)
-
 
 $("#iniciar_prova_button").click(function(){
     var data = new Date()
@@ -132,6 +155,24 @@ $("#btn-cadastrar-boias").click(function(){
 
 })
 
+$("#btn-cadastrar-equipes").click(function(){
+    var equipes_escolhidas = $("#equipe-selecionada").val()
+    localStorage.setItem("equipes_selecionadas", equipes_escolhidas.toString())
+    location.reload()
+    alert("Equipes adicionadas com sucesso")
+
+})
+
+
+$("#botao-remover-equipes").click(function(){
+    if(localStorage.getItem("equipes_selecionadas") != null){
+        localStorage.removeItem("equipes_selecionadas")
+        alert("Todas as equipes foram removidas do mapa!")
+        location.reload()
+    }else{
+        alert("Não há equipes adicionadas ainda!")
+    }
+})
 
 // Tick-tack
 setInterval(function(){
@@ -140,7 +181,6 @@ setInterval(function(){
 
         var data_agora = new Date()
         var data_gravada = localStorage.getItem("hora_gravada")
-
 
 
         var agora = data_agora.toString().split(" ")[4]
@@ -174,6 +214,14 @@ setInterval(function(){
         tempo_decorrido+=s
 
         $('#info-hora').text(tempo_decorrido)
+
+        //Para o teste
+        if(quant_segundos_total % 90 == 0){
+            var x = Math.random() * equipes.length
+            x = Math.floor(x)
+            var f = equipes[x].nome.split(" ").join("")
+            $(".equipe-"+f).click()
+        }
 
     }
 }, 1000)

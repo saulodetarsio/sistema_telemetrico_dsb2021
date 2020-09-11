@@ -26,6 +26,47 @@
     </head>
     <body>
 
+           <!--Modal que contém o formulário para adição de boias-->
+<div class="modal fade" id="adicionar_equipes_form" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarEquipes" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <!--Cabeçalho do modal-->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAdicionarEquipes">Selecione as equipes que irão participar dessa prova </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!--Formulário que adquire as localizações das boias-->
+      <form>
+
+        <!--Corpo do modal-->
+       <div class="modal-body">
+           <div class="input-group mb-3">
+               <select class="form-control" id="equipe-selecionada" multiple size="5">
+
+                </select>
+           </div>
+      </div>
+
+      <div class="modal-footer">
+        <!--Botão de fechar dialog-->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+        <!--Botão de inserir uma boia com base nas coordenadas inseridas no form do dialog-->
+          <button id="btn-cadastrar-equipes" class="btn btn-primary" type="button">Adicionar equipes</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!--Fim do modal que contém o formulário de adição de boias-->
+
+
+
         <!--Modal que contém o formulário para adição de boias-->
 <div class="modal fade" id="adicionar_boias_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -64,7 +105,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 
         <!--Botão de inserir uma boia com base nas coordenadas inseridas no form do dialog-->
-          <button id="btn-cadastrar-boias" class="btn btn-primary" type="button">Cadastrar boia</button>
+          <button id="btn-cadastrar-boias" class="btn btn-primary" type="button">Adicionar boia</button>
       </div>
       </form>
 
@@ -72,7 +113,6 @@
   </div>
 </div>
 <!--Fim do modal que contém o formulário de adição de boias-->
-
 
 
         <div class="principal">
@@ -121,7 +161,16 @@
                 </div>
 
                 <div class="icones-footer">
-                    <div>
+
+                    <div id="botao-remover-equipes">
+                        <i class="fas fa-window-close fa-1x"></i>
+                    </div>
+
+                    <div >
+                        <i class="fas fa-times-circle fa-1x"></i>
+                    </div>
+
+                    <div data-toggle="modal" data-target="#adicionar_equipes_form">
                         <i class="fas fa-ship fa-1x"></i>
                     </div>
 
@@ -156,4 +205,4 @@
     <script src="mapa.js" type="text/javascript"></script>
     <script src="equipe.js" type="text/javascript"></script>
    <script src="mqtt_client.js" type="text/javascript"></script>
-</html>
+</html 
