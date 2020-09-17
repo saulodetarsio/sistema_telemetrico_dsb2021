@@ -1,12 +1,13 @@
 var map = new map_controller()
 var equipes_json = new EquipesJson()
-var equipes = []
-var numero_sorteado = 0;
-
-var opcoes_equipes = ["Arariboia", "Adsumus",  "Fernando Amorim"]
-
-
+var opcoes_equipes = [["Arariboia", 1], ["Adsumus", 2],  ["Fernando Amorim",3], ["Solaris",4], ["Solares",5]]
 var client = new Paho.MQTT.Client("localhost", Number(9001), "/app1/dados/", "solaris"+parseInt(Math.random() * 100 ));
+
+
+var equipes = {}
+var selecionados = []
+var t = 0
+
 
 //document.write("connecting to "+ host);
 var options1 = {
@@ -15,18 +16,14 @@ var options1 = {
     useSSL: false,
  };
 
-
-// called when the client connects
 function onConnect1() {
-  // Once a connection has been made, make a subscription and send a message.
   client.subscribe("app1/dados/#");
 }
 
 function onMessage(msg){
     var mensagem = msg.payloadString
-    //console.log(mensagem)
 
-    if(mensagem.length > 22){
+    if(mensagem.length > 45 &&  Object.keys(equipes).length > 0){
         mensagem = mensagem.slice(1, mensagem.length-1)
 
         var vec = mensagem.split(",")
@@ -37,23 +34,23 @@ function onMessage(msg){
         var velocidade = parseFloat(vec[5])
         var tensao_modulo = parseFloat(vec[6])
 
-        var equipe = equipes[id]
+        var equipe = equipes[id-1]
 
         equipe.set_coords([latitude, longitude])
         equipe.set_tensao_modulo(tensao_modulo)
         equipe.set_velocidade(velocidade)
 
-        map.atualizar_localizacao_barco(equipe)
+        //map.atualizar_localizacao_barco(equipe)
 
     }
-
 }
 
 function renderizar_opcoes_equipes(){
     opcoes_equipes  = opcoes_equipes.sort()
 
     for(var i = 0; i < opcoes_equipes.length; i++){
-        var opt = $("<option></option>").text(opcoes_equipes[i]);
+        var opt = $("<option></option>").text(opcoes_equipes[i][0]);
+        opt.attr("value", opcoes_equipes[i][1])
         $("#equipe-selecionada").append(opt)
     }
 }
@@ -65,9 +62,10 @@ function renderizar_equipes_selecionadas(){
         e = t.split(",")
         for(var i = 0; i < e.length; i++){
             var x = equipes_json[e[i]]
-            var nova_equipe = new Equipe(i+1, e[i],x['cor'], x['coords'], x['img'])
-            map.adicionar_marcador_map(nova_equipe)
-            equipes.push(nova_equipe)
+            var nova_equipe = new Equipe(x['nome'], x['cor'], x['coords'], x['img'])
+
+           map.adicionar_marcador_map(nova_equipe)
+           equipes[e[i]] = nova_equipe
         }
     }
 }
@@ -75,34 +73,60 @@ function renderizar_equipes_selecionadas(){
 function renderizar_equipes(){
     var box = $(".equipes-box")
 
-    for(var i = 0; i < equipes.length; i++){
+     for(var key in equipes){
         var equipe = $('<div class="equipe"></div>')
-        equipe.attr('id', "equipe_"+equipes[i].id)
+        equipe.attr('id', "equipe_"+key)
 
         box.append(equipe)
 
         var div1 = $('<div></div>')
         var marcador_equipe = $('<div class="marcador-equipe"></div>')
-        marcador_equipe.css('background-color', equipes[i].cor)
+        marcador_equipe.css('background-color', equipes[key].cor)
         div1.append(marcador_equipe)
 
         var nome_equipe = $('<div class="nome-equipe"></div>')
-        nome_equipe.text(equipes[i].nome)
+        nome_equipe.text(equipes[key].nome)
 
         equipe.append(div1)
         equipe.append(nome_equipe)
+        selecionados.push(key)
 
     }
 }
+
+
+function ativar_popup_equipes(quant_segundos_total){
+   //Para o teste
+    if(quant_segundos_total % 5 == 0){
+        var f = equipes[selecionados[t]].nome.split(" ").join("")
+
+        $(".equipe-"+f).click()
+         t = t+1
+
+         if(t == Object.keys(equipes).length){
+            t = 0;
+         }
+    }
+}
+
+
+
+/**
+   Programa em execução
+**/
+
+
+//Cliente 1
+client.onMessageArrived = onMessage
+client.connect(options1); //connect
+
 
 renderizar_opcoes_equipes()
 renderizar_equipes_selecionadas()
 renderizar_equipes()
 
 
-//Cliente 1
- client.onMessageArrived = onMessage
- client.connect(options1); //connect
+
 
 
 map.mymap.on('click', function(e){
@@ -148,7 +172,6 @@ $("#btn-cadastrar-boias").click(function(){
     }
 
     //Chamar o método do controle reponsável por renderizar as boias no mapa
-
     $("#longitude-value").val("")
     $("#latitude-value").val("")
     alert("Boia adicionada no mapa com sucesso!")
@@ -160,7 +183,6 @@ $("#btn-cadastrar-equipes").click(function(){
     localStorage.setItem("equipes_selecionadas", equipes_escolhidas.toString())
     location.reload()
     alert("Equipes adicionadas com sucesso")
-
 })
 
 
@@ -173,6 +195,7 @@ $("#botao-remover-equipes").click(function(){
         alert("Não há equipes adicionadas ainda!")
     }
 })
+
 
 // Tick-tack
 setInterval(function(){
@@ -215,13 +238,7 @@ setInterval(function(){
 
         $('#info-hora').text(tempo_decorrido)
 
-        //Para o teste
-        if(quant_segundos_total % 90 == 0){
-            var x = Math.random() * equipes.length
-            x = Math.floor(x)
-            var f = equipes[x].nome.split(" ").join("")
-            $(".equipe-"+f).click()
-        }
+        ativar_popup_equipes(quant_segundos_total);
 
     }
 }, 1000)

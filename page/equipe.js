@@ -1,5 +1,4 @@
-function Equipe(id, nome, cor, coords, img){
-    this.id = id
+function Equipe(nome, cor, coords, img){
     this.nome = nome;
     this.cor = cor;
     this.img = img
@@ -17,7 +16,7 @@ function Equipe(id, nome, cor, coords, img){
         this.coords = coords
     }
 
-    this.set_coords = function(velocidade){
+    this.set_velocidade = function(velocidade){
         this.velocidade = velocidade
     }
 
@@ -90,9 +89,11 @@ function Equipe(id, nome, cor, coords, img){
 function EquipesJson(){
     var object_json = {}
 
-    object_json["Adsumus"] = {'cor':'red', 'coords':[-22.90674600033454, -42.03463554382325], 'img':'adsumus.png'}
-    object_json["Arariboia"] = {'cor':'orange', 'coords':[-22.906815179605964, -42.03444242477418], 'img':'arariboia.png'}
-    object_json["Fernando Amorim"] = {'cor':'green', 'coords':[-22.907042482677856, -42.03479647636414], 'img':'fernando-amorim.png'}
+    object_json[1] = {'nome': 'Adsumus', 'cor':'red', 'coords':[-22.90674600033454, -42.03463554382325], 'img':'adsumus.png'}
+    object_json[2] = {'nome':'Arariboia', 'cor':'orange', 'coords':[-22.906815179605964, -42.03444242477418], 'img':'arariboia.png'}
+    object_json[3] = {'nome':'Fernando Amorim', 'cor':'green', 'coords':[-22.907042482677856, -42.03479647636414], 'img':'fernando-amorim.png'}
+    object_json[4] = {'nome':'Solaris','cor':'yellow', 'coords':[-22.907195664967922, -42.03439950942994], 'img':'fernando-amorim.png'}
+    object_json[5] = {'nome':'Solares', 'cor':'purple', 'coords':[-22.907057306778, -42.03512907028199], 'img':'fernando-amorim.png'}
 
     return object_json
 }

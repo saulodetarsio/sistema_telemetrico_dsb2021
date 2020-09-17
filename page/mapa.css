@@ -236,6 +236,16 @@ body{
     background-color: green;
 }
 
+.equipe-Solares{
+    background-color: purple;
+}
+
+.equipe-Solaris{
+    background-color: yellow;
+}
+
+
+
 .popup_marcador{
     display: flex;
     flex-direction: row;
