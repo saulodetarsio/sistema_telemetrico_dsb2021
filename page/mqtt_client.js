@@ -97,7 +97,7 @@ function renderizar_equipes(){
 
 function ativar_popup_equipes(quant_segundos_total){
    //Para o teste
-    if(quant_segundos_total % 5 == 0){
+    if(quant_segundos_total % 5 == 0 && localStorage.getItem("equipes_selecionadas") != null){
         var f = equipes[selecionados[t]].nome.split(" ").join("")
 
         $(".equipe-"+f).click()
@@ -109,6 +109,11 @@ function ativar_popup_equipes(quant_segundos_total){
     }
 }
 
+function renderizar_boias_circuito(){
+   if(localStorage.getItem('boias') != null){
+        map.adicionar_boia_mapa(JSON.parse(localStorage.getItem('boias')))
+   }
+}
 
 
 /**
@@ -124,10 +129,7 @@ client.connect(options1); //connect
 renderizar_opcoes_equipes()
 renderizar_equipes_selecionadas()
 renderizar_equipes()
-
-
-
-
+renderizar_boias_circuito()
 
 map.mymap.on('click', function(e){
     var lat = e.latlng.lat
@@ -175,6 +177,10 @@ $("#btn-cadastrar-boias").click(function(){
     $("#longitude-value").val("")
     $("#latitude-value").val("")
     alert("Boia adicionada no mapa com sucesso!")
+    location.reload()
+
+    renderizar_boias_circuito()
+
 
 })
 
@@ -193,6 +199,16 @@ $("#botao-remover-equipes").click(function(){
         location.reload()
     }else{
         alert("Não há equipes adicionadas ainda!")
+    }
+})
+
+$("#botao-remover-boias").click(function(){
+    if(localStorage.getItem("boias") != null){
+        localStorage.removeItem("boias")
+        alert("Todas as boias foram removidas do mapa!")
+        location.reload()
+    }else{
+        alert("Não há boias adicionadas ainda!")
     }
 })
 
@@ -239,6 +255,7 @@ setInterval(function(){
         $('#info-hora').text(tempo_decorrido)
 
         ativar_popup_equipes(quant_segundos_total);
+
 
     }
 }, 1000)
