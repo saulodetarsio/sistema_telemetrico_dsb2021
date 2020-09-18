@@ -4,7 +4,39 @@ function map_controller(){
     this.zoom = 15
 
     this.mymap = L.map('mapid').setView([-22.895489074551936, -42.00747013092042], this.zoom);
-    L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(this.mymap);
+    var options = {
+        position:'topleft',
+        unit:'metres',
+        showBearings:true,
+        clearMeasurementsOnStop: false,
+        showClearControl: true,
+        showUnitControl: true,
+        measureControlTitleOn: 'Habilitar a medida',   // Title for the control going to be switched on
+        measureControlTitleOff: 'Desabilitar medida', // Title for the control going to be switched off
+        clearControlTitle: 'Limpar medidas', // Title text to show on the clear measurements control button
+        tooltipTextFinish: 'Clique para <b>finalizar a linha</b><br>',
+        tooltipTextDelete: 'Pressione SHIFT-key e clique para <b>excluir o ponto</b>',
+        tooltipTextMove: 'Clique e arraste para <b>mover o ponto</b><br>',
+        tooltipTextResume: '<br>Pressione CTRL-key e clique para <b>continuar a linha</b>',
+        tooltipTextAdd: 'Pressione CTRL-key e clique para <b>adicionar o ponto</b>',
+
+        unitControlTitle: {             // Title texts to show on the Unit Control button
+            text: 'Mudar a unidade de medida',
+            metres: 'metro',
+            landmiles: 'milhas terrestres',
+            nauticalmiles: 'milhas náuticas'
+        },
+
+        unitControlLabel: {             // Unit symbols to show in the Unit Control button and measurement labels
+            metres: 'm',
+            kilometres: 'km',
+            feet: 'pés',
+            landmiles: 'mi',
+            nauticalmiles: 'mn'
+        },
+
+    }
+    L.control.polylineMeasure(options).addTo(this.mymap);
     this.marcadores_equipes = {}
     this.boias_circuito = {}
 
