@@ -58,6 +58,8 @@ function renderizar_opcoes_equipes(){
 function renderizar_equipes_selecionadas(){
     var t = localStorage.getItem("equipes_selecionadas")
     var e;
+
+    console.log(localStorage)
     if(t != null){
         e = t.split(",")
         for(var i = 0; i < e.length; i++){
@@ -182,6 +184,14 @@ $("#btn-cadastrar-boias").click(function(){
     renderizar_boias_circuito()
 
 
+})
+
+$("#adicionar_equipes_b").click(function(){
+    $("#adicionar_equipes_form").modal("show");
+})
+
+$("#adicionar_boias_b").click(function(){
+    $("#adicionar_boias_form").modal("show");
 })
 
 $("#btn-cadastrar-equipes").click(function(){
