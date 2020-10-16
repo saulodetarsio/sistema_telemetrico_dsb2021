@@ -23,27 +23,63 @@ function onConnect1() {
 function onMessage(msg){
     var mensagem = msg.payloadString
 
-    if(mensagem.length > 45 &&  Object.keys(equipes).length > 0){
-        mensagem = mensagem.slice(1, mensagem.length-1)
 
-        var vec = mensagem.split(",")
+    if(Object.keys(equipes).length > 0){
+        processar_mesagem_recebida(mensagem)
 
-        var id = parseInt(vec[0])
-        var latitude = parseFloat(vec[1])
-        var longitude = parseFloat(vec[2])
-        var velocidade = parseFloat(vec[5])
-        var tensao_modulo = parseFloat(vec[6])
 
-        var equipe = equipes[id-1]
 
-        equipe.set_coords([latitude, longitude])
-        equipe.set_tensao_modulo(tensao_modulo)
-        equipe.set_velocidade(velocidade)
-
-        //map.atualizar_localizacao_barco(equipe)
 
     }
 }
+
+function processar_mesagem_recebida(msg){
+
+    var msgs = msg.split("*")
+
+
+
+    for (var i = 0; i < msgs.length; i++){
+
+        if(msgs[i][0] == '[' && msgs[i][msgs[i].length-1] == ']'){
+            msgs[i] = msg.slice(1, msgs[i].length-1)
+
+            var vec = msgs[i].split(",")
+
+
+
+            var id = parseInt(vec[0])
+            var latitude = parseFloat(vec[1])
+            var longitude = parseFloat(vec[2])
+
+
+            var velocidade = parseFloat(vec[5])
+            var tensao_modulo = parseFloat(vec[6])
+
+
+            var equipe = equipes[id]
+
+            if(equipe == null){
+                break;
+            }
+
+            equipe.set_coords([latitude, longitude])
+
+            equipe.set_tensao_modulo(tensao_modulo)
+            equipe.set_velocidade(velocidade)
+
+            map.atualizar_localizacao_barco(equipe)
+
+            console.log("->", id, latitude, longitude, velocidade, tensao_modulo)
+
+        }
+    }
+
+
+
+}
+
+
 
 function renderizar_opcoes_equipes(){
     opcoes_equipes  = opcoes_equipes.sort()
@@ -59,7 +95,6 @@ function renderizar_equipes_selecionadas(){
     var t = localStorage.getItem("equipes_selecionadas")
     var e;
 
-    console.log(localStorage)
     if(t != null){
         e = t.split(",")
         for(var i = 0; i < e.length; i++){
@@ -100,9 +135,13 @@ function renderizar_equipes(){
 function ativar_popup_equipes(quant_segundos_total){
    //Para o teste
     if(quant_segundos_total % 5 == 0 && localStorage.getItem("equipes_selecionadas") != null){
-        var f = equipes[selecionados[t]].nome.split(" ").join("")
+        var f = equipes[selecionados[t]]
 
-        $(".equipe-"+f).click()
+        f.acionar_popup_equipe()
+
+        //$(".equipe-"+f).click()
+
+
          t = t+1
 
          if(t == Object.keys(equipes).length){

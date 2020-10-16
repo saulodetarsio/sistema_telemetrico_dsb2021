@@ -11,7 +11,7 @@ port = 1883  # define a porta do broker
 keppAlive = 60  # define o keepAlive da conexao
 topico_medidas = 'app/medidas'  # define o topico que este script assinara
 topico_loc = 'app1/dados/equipe1'
-periodo = 0.01
+periodo = 0.5
 identificador_barco = 1
 
 
@@ -73,7 +73,7 @@ def definir_valores_da_linha(linha):
 
 # Ficará publicando dados aleátórios para o canal no qual está escrito, que é renderizar\
 try:
-
+    i = 0
     """
     with open('dados_iffsolaris_provas78_dsb2020.csv', 'a', newline='') as file:
         writer = csv.writer(file)
@@ -82,7 +82,7 @@ try:
 
     """
 
-    ref_arquivo = open("dados_iffsolaris_prova3_dsb2020.txt", "r")
+    ref_arquivo = open("log.txt", "r")
 
     client = mqtt.Client('publicador_{}'.format(identificador_barco))  # instancia a conexao
     client.on_connect = on_connect  # define o callback do evento on_connect
@@ -96,14 +96,22 @@ try:
     e = threading.Event()
     flag = True
     while not e.wait(periodo) and linha:
-        medidas, localizacao = definir_valores_da_linha(linha)
+        #medidas, localizacao = definir_valores_da_linha(linha)
 
         # if medidas != "":
         #    client.publish(topico_medidas, medidas)
-        if localizacao != "":
-            client.publish(topico_loc, localizacao)
+        #if localizacao != "":
+        #    client.publish(linha)
+
+        if (linha != "") and (linha != '\n'):
+            client.publish("app1/dados/equipes", linha)
+            i = i+1
+            print(f"{linha} -> {i}")
+
 
         linha = ref_arquivo.readline()
+
+
 
     ref_arquivo.close()
     client.loop_forever()  # a conexao mqtt entrara em loop ou seja, ficara escutando e processando todas mensagens recebidas

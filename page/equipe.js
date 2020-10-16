@@ -7,6 +7,17 @@ function Equipe(nome, cor, coords, img){
     this.tensao_modulo = 15.2
     this.velocidade = 3.14
 
+    this.marcador = null
+
+    this.set_marcador_equipe = function(){
+        var classe="geolocalizacao equipe-"+this.nome.split(" ").join("")
+        var myIcon = L.divIcon({className: classe})
+        this.marcador = L.marker(this.coords, {icon: myIcon})
+    }
+
+    this.get_marcador_equipe = function(){
+        return this.marcador
+    }
 
     this.set_tensao_modulo = function(tensao_modulo){
         this.tensao_modulo = tensao_modulo
@@ -19,6 +30,10 @@ function Equipe(nome, cor, coords, img){
     this.set_velocidade = function(velocidade){
         this.velocidade = velocidade
     }
+
+    this.acionar_popup_equipe = function(){
+	    this.marcador.bindPopup("<div class='popup_marcador'>"+this.create_popup()+"</div>").openPopup()
+	}
 
     this.create_popup = function(){
 

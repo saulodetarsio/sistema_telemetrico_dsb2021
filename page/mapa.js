@@ -45,17 +45,16 @@ function map_controller(){
 
 
     this.adicionar_marcador_map = function(equipe){
-        var classe="geolocalizacao equipe-"+equipe["nome"].split(" ").join("")
-        var myIcon = L.divIcon({className: classe});
-        this.marcadores_equipes[equipe["id"]] = L.marker(equipe['coords'], {icon: myIcon}).addTo(this.mymap)
-        this.marcadores_equipes[equipe["id"]].bindPopup("<div class='popup_marcador'>"+equipe.create_popup()+"</div>").openPopup()
+        equipe.set_marcador_equipe()
+        var m = equipe.get_marcador_equipe().addTo(this.mymap)
     }
 
     this.atualizar_localizacao_barco = function(equipe){
-        var marcador_equipe = this.marcadores_equipes[equipe.id]
+        var marcador_equipe = equipe.get_marcador_equipe()
         marcador_equipe.setLatLng(equipe.coords)
-        this.marcadores_equipes[equipe["id"]].bindPopup("<div class='popup_marcador'>"+equipe.create_popup()+"</div>").openPopup()
 	}
+
+
 
     this.adicionar_boia_mapa = function(boias){
 

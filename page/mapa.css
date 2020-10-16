@@ -199,8 +199,8 @@ body{
 }
 
 .geolocalizacao{
-	min-height: 4px;
-	min-width: 4px;
+	min-height: 1px;
+	min-width: 1px;
 
 	border-radius: 50%;
 	border: 2px solid green;
@@ -211,8 +211,8 @@ body{
 }
 
 .marcador-equipe{
-   height: 5px;
-   width: 5px;
+   height: 1px;
+   width: 1px;
    border-radius: 50%;
  }
 
